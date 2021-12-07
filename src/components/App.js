@@ -1,21 +1,37 @@
 import Landing from './Landing'
 import NavBar from './NavBar'
 import Login from './Login'
-import GameCard from './GameCard'
-import {BrowserRouter, Routes, Route,} from 'react-router-dom'
+import GameContainer from './GameContainer'
+import {useState} from 'react'
+import {Routes, Route, useNavigate} from 'react-router-dom'
 import '../componentStyles/AppStyles.css'
 
 function App() {
+
+  const [loggedIn, setLoggedIn] = useState(false)
+  const navigate = useNavigate()
+
+  const logOut = (e) => {
+    fetch('/me', {
+      method: "DELETE",
+      headers: {
+        "Content-Type": 'application/json'
+      },
+    })
+    .then(resp => resp.json())
+    
+    setLoggedIn(!loggedIn)
+    navigate('/')
+  }
+
   return (
     <div className="App">
-      <BrowserRouter>
-        <NavBar />
-        <GameCard />
+        <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} logOut={logOut}/>
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/home' element={<GameContainer />} />
         </Routes>
-      </BrowserRouter>
     </div>
   );
 }

@@ -22,12 +22,10 @@ export default function Login() {
   // Handlers
   const handleLogInData = (e) => {
     setLogInData({...loginData, [e.target.name]:e.target.value})
-    console.log(loginData)
   }
 
   const handleSignUpData = (e) => {
     setSignUpData({...signUpData, [e.target.name]:e.target.value})
-    console.log(signUpData)
   }
 
   // Submit Login or Sign up
@@ -35,7 +33,7 @@ export default function Login() {
     const {email, password} = loginData
     e.preventDefault()
     
-    fetch('http://localhost:3000/login', {
+    fetch('/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -51,7 +49,7 @@ export default function Login() {
     const {email, password, passwordConfirmation} = signUpData
     e.preventDefault()
 
-    fetch('http://localhost:3000/signup', {
+    fetch('/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -67,7 +65,7 @@ export default function Login() {
 
   return (
     <div className="display-grid">
-      <img src="https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1307&q=80"/>
+      <img  alt= "volleyball game" src="https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1307&q=80"/>
       <div className="form-container">
         <div className="credentials">
           <form className="login-form" onSubmit={(e) => login(e, loginData)}>

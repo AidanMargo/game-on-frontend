@@ -1,5 +1,22 @@
 .card {
-  background-color: lightgray;
-  width: 45%;
-  height: auto;
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: space-between;
+    padding: 1rem;
+    border-bottom: 1px solid lightgray;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-left: 2rem;
+}
+
+.game-name {
+  color:black 
+}
+
+.player-count {
+  text-align: right;
 }
