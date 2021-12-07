@@ -7,7 +7,7 @@ export default function NavBar({loggedIn, setLoggedIn, logOut, user}) {
 
   return (
       <div className="nav-container">
-        <h1>Game On</h1>
+        <h1 className="game-on">Game On</h1>
         <ul>
 
           {!user ? 
@@ -21,7 +21,6 @@ export default function NavBar({loggedIn, setLoggedIn, logOut, user}) {
             <Link to="/profile" style={linkStyle}><li>Profile</li></Link>
             <Link to="/" style={linkStyle}><li onClick={logOut}>Log Out</li></Link>
           </>}
-        
         </ul>
     </div>
   )

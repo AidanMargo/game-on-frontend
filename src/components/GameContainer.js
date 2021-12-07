@@ -3,7 +3,7 @@ import Search from './Search'
 import {useEffect, useState} from 'react'
 import '../componentStyles/GameContainerStyles.css'
 
-export default function GameContainer({user, setUser}) {
+export default function GameContainer({user}) {
 
   // State Variables
   const [games, setGames] = useState([])
@@ -20,19 +20,25 @@ export default function GameContainer({user, setUser}) {
   })
 
   
-  // Get Game and current user
+  // Get Games
   useEffect(() => {
     fetch('/games')
     .then(resp => resp.json())
     .then(data => setGames(data))
   }, [])
   
-  
+  const getGames = () => {
+    fetch('/games')
+    .then(resp => resp.json())
+    .then(data => setGames(data))
+  }
+
   // State Handler Functions
   const handleSearch = (e) => setSearch(e.target.value)
   const handleGameData = (e) => {
     setGameData({...gameData, [e.target.name]:e.target.value})
   }
+
 
   // Search functionality
   const searchByNameResults = () => {
@@ -67,11 +73,14 @@ const createGame = (e, gameData) => {
       })
     })
     .then(resp => resp.json())
-    .then(data => setGames([data, ...games]))
+    .then(data => setGames([...games, data]))
   }
 
   
   return (
+    <>
+
+    {/* <h1>Welcome, {user.name}!</h1> */}
     <div className="game-grid">
       {/* Create a Game Form */}
       <form className="login-form" onSubmit={(e) => createGame(e, gameData)}>
@@ -144,8 +153,9 @@ const createGame = (e, gameData) => {
       {/* Game Container */}
       <div className="card-container">
         <Search search={search} handleSearch={handleSearch} />
-        {searchByNameResults().map(game => <GameCard key={game.id}game={game}/>)}
+        {searchByNameResults().map(game => <GameCard key={game.id} game={game} user={user} getGames={getGames}/>)}
       </div>
     </div>
+  </>
   )
 }

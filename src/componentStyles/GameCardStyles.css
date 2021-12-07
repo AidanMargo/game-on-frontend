@@ -20,3 +20,23 @@
 .player-count {
   text-align: right;
 }
+
+.action-btn-container {
+  display: flex;
+}
+.action-btn {
+  width: 10%;
+  padding: .5rem;
+  border: none;
+  cursor: pointer;
+}
+
+.join-btn {
+  background-color: rgb(57, 177, 109);
+}
+.delete-btn {
+  background-color: rgb(117, 25, 25);
+  color: white;
+  font-size: 1.1rem;
+  margin-left: 1rem;
+}

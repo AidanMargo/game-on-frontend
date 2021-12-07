@@ -1,8 +1,8 @@
 import {useState} from 'react'
 import '../componentStyles/LoginStyles.css'
-// import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
-export default function Login() {
+export default function Login({setUser}) {
 
 // Fetches
 
@@ -13,6 +13,7 @@ export default function Login() {
   })
 
   const [signUpData, setSignUpData] = useState({
+    name: '',
     email: '',
     password: '',
     passwordConfirmation: ''
@@ -29,7 +30,7 @@ export default function Login() {
   }
 
   // Submit Login or Sign up
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
 
   const login = (e, loginData) => {
     const {email, password} = loginData
@@ -46,13 +47,13 @@ export default function Login() {
       })
     })
     .then(resp => resp.json())
-    .then(data => console.log(data))
-    // .then(navigate('/home'))
+    .then(data => setUser(data))
+    .then(navigate('/home'))
   }
 
 
   const signUp = (e, signUpData) => {
-    const {email, password, passwordConfirmation} = signUpData
+    const {name, email, password, passwordConfirmation} = signUpData
     e.preventDefault()
 
     fetch('/users', {
@@ -61,11 +62,17 @@ export default function Login() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        email: email, 
-        password: password, 
+        name,
+        email,
+        password,
         password_confirmation: passwordConfirmation
       })
     })
+    .then(resp => resp.json())
+    .then(data => setUser(data))
+    .then(() => navigate('/home'))
+    
+    
   }
 
 
@@ -99,6 +106,12 @@ export default function Login() {
           <div className="credentials">
             <form onSubmit={(e) => signUp(e, signUpData)} className='login-form'>
               <label>Sign Up: </label>
+              <input value={signUpData.name}
+                name="name"
+                required = 'required'
+                placeholder="Name"
+                className = "input-field"
+                onChange={(e) => handleSignUpData(e)}/>
               <input value={signUpData.email}
                 name="email"
                 required = 'required'

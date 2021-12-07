@@ -14,10 +14,14 @@ function App() {
 
   const [user, setUser] = useState(null)
   useEffect(() => {
-    fetch('/me')
-    .then(resp => resp.json())
-    .then(data => setUser(data))
-  }, [])
+    fetch("/me").then((response) => {
+      if (response.ok) {
+        response.json()
+        .then(user => setUser(user))
+        .then(navigate('/home'))
+      }
+    });
+  }, []);
 
   const logOut = (e) => {
     fetch('/logout', {
@@ -36,8 +40,8 @@ function App() {
         <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn} logOut={logOut} user={user}/>
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/home' element={<GameContainer />} />
+          <Route path='/login' element={<Login setUser={setUser}/>} />
+          <Route path='/home' element={<GameContainer user={user}/>} />
         </Routes>
     </div>
   );
