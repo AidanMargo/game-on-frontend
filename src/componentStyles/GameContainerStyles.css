@@ -1,6 +1,13 @@
-.container {
-    margin: 3rem 2rem;
-    width: 65%;
+.game-grid{
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: center;
+  justify-items: center;
+}
+
+.card-container {
+    margin: 3rem;
+    width: 85%;
     height: 35rem;
     background-color: rgb(245, 245, 245);
     overflow-y: auto;
@@ -9,11 +16,12 @@
     float: right;
 }
 
-.container div:first-of-type {
+.card-container div:first-of-type {
   display: flex;
   justify-content: space-between;
 }
 
-.container::-webkit-scrollbar {
+.card-container::-webkit-scrollbar {
   display: none;
 }
+

@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import '../componentStyles/LoginStyles.css'
-
+// import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
 
@@ -29,6 +29,8 @@ export default function Login() {
   }
 
   // Submit Login or Sign up
+  // const navigate = useNavigate()
+
   const login = (e, loginData) => {
     const {email, password} = loginData
     e.preventDefault()
@@ -43,20 +45,24 @@ export default function Login() {
         password
       })
     })
+    .then(resp => resp.json())
+    .then(data => console.log(data))
+    // .then(navigate('/home'))
   }
+
 
   const signUp = (e, signUpData) => {
     const {email, password, passwordConfirmation} = signUpData
     e.preventDefault()
 
-    fetch('/signup', {
+    fetch('/users', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        email, 
-        password,
+        email: email, 
+        password: password, 
         password_confirmation: passwordConfirmation
       })
     })

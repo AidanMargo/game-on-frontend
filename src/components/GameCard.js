@@ -11,8 +11,8 @@ current_players, max_players, description}}) {
       <div className="details">
         <div>
         <h1 className="game-name">{name}</h1>
-        {!showDesc ? <i class="fas fa-plus" onClick={() => setShowDesc(true)}></i>
-        : <i class="fas fa-minus" onClick={() => setShowDesc(false)}></i>}
+        {!showDesc ? <i className="fas fa-plus" onClick={() => setShowDesc(true)}></i>
+        : <i className="fas fa-minus" onClick={() => setShowDesc(false)}></i>}
         </div>
         <h2>{location}</h2>
         <h2>{date}</h2>
