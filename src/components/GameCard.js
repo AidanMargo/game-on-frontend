@@ -7,12 +7,6 @@ current_players, max_players, description, host_id, id}}) {
 
   const [showDesc, setShowDesc] = useState(false)
 
-  const editGame = (e, id) => {
-
-  }
-
-
-
   const joinGame = (e, userId, gameId) => {
     e.preventDefault()
 
@@ -43,9 +37,11 @@ current_players, max_players, description, host_id, id}}) {
   }
 
   return (
+    <>  
     <div className="card">
       <div className="details">
         <div>
+          <button onClick={() => console.log(game)}>Game Obj info</button>
           <h1 className="game-name">{name}</h1>
           {!showDesc ? <i className="fas fa-plus" onClick={() => setShowDesc(true)}></i>
           : <i className="fas fa-minus" onClick={() => setShowDesc(false)}></i>}
@@ -61,16 +57,17 @@ current_players, max_players, description, host_id, id}}) {
         </>}
         <div className="player-count">
           <h3>{current_players}/{max_players} Players</h3>
-          <button className="action-btn join-btn" onClick={(e) => joinGame(e, user.id, id)}>Join This Game!</button>
+          <button className="action-btn join-btn" onClick={(e) => joinGame(e, user.id, game.id)}>Join This Game!</button>
         </div>
         
         {/* Only edit or delete if user created the card */}
         {host_id === user.id ? 
           <div className="action-btn-container">
-            <button className= "action-btn " onClick={e => editGame(e, game.id)}>Edit</button>
+            <button className= "action-btn " >Edit</button>
             <button className= "action-btn delete-btn" onClick={(e)=> deleteGame(e, game.id)}>Delete</button>
           </div> : null}
       </div>
     </div>
+    </>
   )
 }

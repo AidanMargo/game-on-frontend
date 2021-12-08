@@ -3,11 +3,9 @@ import Search from './Search'
 import {useEffect, useState} from 'react'
 import '../componentStyles/GameContainerStyles.css'
 
-export default function GameContainer({user}) {
+export default function GameContainer({user, setGames, games, search, searchResults, handleSearch, getGames}) {
 
   // State Variables
-  const [games, setGames] = useState([])
-  const [search, setSearch] = useState('')
   const [gameData, setGameData] = useState({
     name: '',
     date: '',
@@ -20,35 +18,12 @@ export default function GameContainer({user}) {
   })
 
   
-  // Get Games
-  useEffect(() => {
-    fetch('/games')
-    .then(resp => resp.json())
-    .then(data => setGames(data))
-  }, [])
-  
-  const getGames = () => {
-    fetch('/games')
-    .then(resp => resp.json())
-    .then(data => setGames(data))
-  }
-
   // State Handler Functions
-  const handleSearch = (e) => setSearch(e.target.value)
   const handleGameData = (e) => {
     setGameData({...gameData, [e.target.name]:e.target.value})
   }
-
-
   // Search functionality
-  const searchByNameResults = () => {
-    if (search.length > 0) {
-      return games.filter(game => game.name.toLowerCase().includes(search.toLowerCase()) 
-      || game.location.toLowerCase().includes(search.toLowerCase()))
-    } else {
-      return games
-    }
-  }
+  
 
   // Create a new game
 const createGame = (e, gameData) => {
@@ -79,8 +54,9 @@ const createGame = (e, gameData) => {
   
   return (
     <>
-
-    {/* <h1>Welcome, {user.name}!</h1> */}
+    {games.length > 0 && user ?  
+    <>
+    <h1>Welcome, {user.name}!</h1>
     <div className="game-grid">
       {/* Create a Game Form */}
       <form className="login-form" onSubmit={(e) => createGame(e, gameData)}>
@@ -153,9 +129,11 @@ const createGame = (e, gameData) => {
       {/* Game Container */}
       <div className="card-container">
         <Search search={search} handleSearch={handleSearch} />
-        {searchByNameResults().map(game => <GameCard key={game.id} game={game} user={user} getGames={getGames}/>)}
+        {searchResults().map(game => <GameCard key={game.id} game={game} user={user} getGames={getGames}/>)}
       </div>
-    </div>
+      </div>
+    </>
+    : <h1 className="loading-msg">Loading Data...</h1>}
   </>
   )
 }
