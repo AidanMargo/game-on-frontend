@@ -14,6 +14,8 @@ export default function Login({setUser}) {
 
   const [signUpData, setSignUpData] = useState({
     name: '',
+    age: null,
+    profile_pic: 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg',
     email: '',
     password: '',
     passwordConfirmation: ''
@@ -53,7 +55,7 @@ export default function Login({setUser}) {
 
 
   const signUp = (e, signUpData) => {
-    const {name, email, password, passwordConfirmation} = signUpData
+    const {name, age, profile_pic, email, password, passwordConfirmation} = signUpData
     e.preventDefault()
 
     fetch('/users', {
@@ -63,6 +65,8 @@ export default function Login({setUser}) {
       },
       body: JSON.stringify({
         name,
+        age,
+        profile_pic,
         email,
         password,
         password_confirmation: passwordConfirmation
@@ -109,7 +113,14 @@ export default function Login({setUser}) {
               <input value={signUpData.name}
                 name="name"
                 required = 'required'
-                placeholder="Name"
+                placeholder="Username"
+                className = "input-field"
+                onChange={(e) => handleSignUpData(e)}/>
+              <input value={signUpData.age}
+                type="number"
+                name="age"
+                required = 'required'
+                placeholder="Age"
                 className = "input-field"
                 onChange={(e) => handleSignUpData(e)}/>
               <input value={signUpData.email}

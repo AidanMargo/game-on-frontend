@@ -2,3 +2,34 @@
   display: grid;
   grid-template-columns: 1fr 3fr;
 }
+
+.profile-pic {
+  border-radius: 50%;
+  height: 50%;
+  width: 90%;
+  margin: 0.5rem auto;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-profile {
+  width: 40%;
+  margin: 4rem auto;
+  padding: 1rem;
+}
+
+.prof-input-field {
+  width: 80%;
+  height: 3rem;
+  border: none;
+  background-color: #E5E5E5;
+  text-align: center;
+  margin: 2rem auto;
+}
+
+.profile-details {
+
+}

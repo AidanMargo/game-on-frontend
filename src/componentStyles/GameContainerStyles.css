@@ -5,8 +5,15 @@
   justify-items: center;
 }
 
+.welcome-msg {
+  font-size: 3rem;
+  margin: 2rem;
+  color: white;
+  text-align: center;
+}
+
 .card-container {
-    margin: 3rem;
+    margin: 1rem;
     width: 85%;
     height: 35rem;
     background-color: rgb(245, 245, 245);
@@ -23,5 +30,15 @@
 
 .card-container::-webkit-scrollbar {
   display: none;
+}
+
+
+label {
+  color: white;
+}
+
+.create-game-form {
+  width: 15rem;
+  margin: 1rem;
 }
 

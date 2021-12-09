@@ -56,10 +56,10 @@ const createGame = (e, gameData) => {
     <>
     {games.length >= 0 && user ?  
     <>
-    <h1>Welcome, {user.name}!</h1>
+    <h1 className="welcome-msg" >Welcome, {user.name}!</h1>
     <div className="game-grid">
       {/* Create a Game Form */}
-      <form className="login-form" onSubmit={(e) => createGame(e, gameData)}>
+      <form className="create-game-form" onSubmit={(e) => createGame(e, gameData)}>
         <label>Game Name </label>
         <input
           type='text'
@@ -95,15 +95,6 @@ const createGame = (e, gameData) => {
           className='input-field'
           value={gameData.location}
           placeholder='Location'
-          onChange={(e) => handleGameData(e)}></input>
-          <label>Current Players: </label>
-        <input
-          type='number'
-          name='current_players'
-          required='required'
-          className='input-field'
-          value={gameData.current_players}
-          placeholder='Current Players'
           onChange={(e) => handleGameData(e)}></input>
           <label>Max Players: </label>
         <input

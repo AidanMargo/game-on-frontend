@@ -5,6 +5,7 @@ import '../componentStyles/GameCardStyles.css'
 export default function GameCard({user, game, gameData, setGameData, getGames, setGames, game:{name, sport, location, date,
 current_players, max_players, description, host_id, id}}) {
 
+  // State Variables
   const [showDesc, setShowDesc] = useState(false)
   const [edit, setEdit] = useState(false)
   const [participants, setParticipants] = useState([])
@@ -121,7 +122,19 @@ current_players, max_players, description, host_id, id}}) {
     })
   }
 
-  let participant = participants.find(participant => participant.user_id === user.id)
+  // Returns "Game is Full" or an option to join a game dependent on participant status and # of participants
+  const joinOptions = () => {
+    if(current_players === max_players && !participant){
+      return <p>Game is full</p>
+    } else if (!participant && current_players < max_players) {
+      return <button className="action-btn join-btn" onClick={(e) => joinGame(e, user.id, id)}>Join This Game!</button>
+    } else {
+      return <button className="action-btn leave-btn" onClick={(e) => leaveGame(e, participant.id)}>Leave Game</button>
+    }
+  }
+
+  // Checks to see if user is a participant in this game
+  let participant = participants.length > 0 &&participants.find(participant => participant.user_id === user.id)
 
   return (
     <>  
@@ -195,11 +208,12 @@ current_players, max_players, description, host_id, id}}) {
             {edit ? <button className= "action-btn" onClick ={(e) => updateGame(e, id, gameInfo)}>Save</button>
               :<button className= "action-btn" onClick ={() => handleEdit()}>Edit</button> }
             <button className= "action-btn delete-btn" onClick={(e)=> deleteGame(e, id)}>Delete</button>
-          </div>
-          {!participant ?
-            <button className="action-btn join-btn" onClick={(e) => joinGame(e, user.id, id)}>Join This Game!</button>
-          : <button className="action-btn leave-btn" onClick={(e) => leaveGame(e, id)}>Leave Game</button> }
+            </div>
           </div> : null}
+          <div className ="participant-btn-container">
+            {joinOptions()}
+          </div>
+          
       </div>
     </div>
     </>

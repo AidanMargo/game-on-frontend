@@ -2,10 +2,17 @@ import GameCard from './GameCard'
 import Search from './Search'
 import '../componentStyles/ProfileStyles.css'
 import {useEffect, useState} from 'react'
-export default function Profile({user, search, searchResults, handleSearch, getGames}) {
+export default function Profile({user, getUser, search, searchResults, handleSearch, getGames}) {
 
-
+  const [editProfile, setEditProfile] = useState(false)
   const [userGames, setUserGames] = useState([])
+  const [profileData, setProfileData] = useState({
+    name: '',
+    profile_pic: ''
+  })
+
+
+  // Get all user's games
   useEffect(() => {
     if(user) {
     fetch(`/user/games/${user.id}`)
@@ -14,6 +21,33 @@ export default function Profile({user, search, searchResults, handleSearch, getG
     }
   }, [])
 
+  const handleEditProfile = () => setEditProfile(!editProfile)
+  const handleProfileData = (e) => {
+    setProfileData({...profileData, [e.target.name]:e.target.value})
+    console.log(profileData)
+  }
+
+  const updateProfile = (e, id, profileData) => {
+    const {name, profile_pic} = profileData
+    e.preventDefault()
+
+    fetch(`/users/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+         name,
+         profile_pic
+      })
+    })
+    .then(resp => resp.json())
+    .then(data => console.log(data))
+    .then(() => {
+      handleEditProfile()
+      getUser()
+    })
+  }
   // const userGameSearch = ()
 
   return (
@@ -23,10 +57,20 @@ export default function Profile({user, search, searchResults, handleSearch, getG
     <div className="profile-grid">
      
       <div className="user-info">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdhnZO4YVdLifMuNbR_uNjtlW246uAayxk8wtAh_CLc6Nba7Aeys4tCPhFjIeT7hWe5co&usqp=CAU"/>
-        <h1>{user.name}</h1>
-        <h2>{user.age}</h2>
-        <h2></h2>
+        
+        <div className="card-container">
+          {!editProfile ? <img className="profile-pic" src={user.profile_pic}/> 
+            : <input type='text' value={profileData.profile_pic} name='profile_pic' className="prof-input-field"
+              placeholder="Image URL" 
+              onChange={(e) => handleProfileData(e)}/>}
+          <div className="profile-details">
+            <h1>Username: {user.name}</h1>     
+          </div>
+          
+          {!editProfile ? 
+          <button className="edit-profile" onClick={() =>handleEditProfile()}>Edit Profile Picture</button>
+          : <button className="edit-profile" onClick={(e) => updateProfile(e, user.id, profileData)}>Save Picture</button>}
+        </div>
       </div>
       <div className="user-games"> 
         <div className="card-container">

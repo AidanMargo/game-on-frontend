@@ -37,6 +37,14 @@ function App() {
     });
   }, []);
 
+  const getUser = () => {
+    fetch("/me").then((response) => {
+      if (response.ok) {
+        response.json()
+        .then(user => setUser(user))
+      }
+    })
+  }
 
   // Handle Search function
   const [search, setSearch] = useState('')
@@ -70,7 +78,7 @@ function App() {
           <Route path='/home' element={<GameContainer user={user} setGames={setGames} games={games} search={search} handleSearch={handleSearch}
             searchResults={searchByNameResults} getGames={getGames} />} />
           <Route path='/profile' element={<Profile user={user} search={search} handleSearch={handleSearch} searchResults={searchByNameResults}
-            getGames={getGames}/>} />
+            getGames={getGames} getUser={getUser}/>} />
         </Routes>
     </div>
   );

@@ -6,3 +6,11 @@
   box-sizing: border-box;
   font-family: 'Asap', sans-serif;
 }
+
+body { 
+  background: url('https://t4.ftcdn.net/jpg/03/90/66/17/360_F_390661775_BY3omV6LTS2064GbghxN9MBxgp4oV67W.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
