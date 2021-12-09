@@ -16,6 +16,7 @@ current_players, max_players, description, host_id, id}}) {
     description  
   })
 
+  // Get all participants for the game and set to state
   useEffect(() => {
     fetch(`/games/${id}` , {
       method: 'GET',
@@ -26,6 +27,17 @@ current_players, max_players, description, host_id, id}}) {
     .then(resp => resp.json())
     .then(data => setParticipants(data.participants))
   }, [])
+
+  const getParticipants = () => {
+    fetch(`/games/${id}` , {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(resp => resp.json())
+    .then(data => setParticipants(data.participants))
+  }
 
   // Create participant and add to user's games
   const joinGame = (e, userId, gameId) => {
@@ -43,7 +55,10 @@ current_players, max_players, description, host_id, id}}) {
     })
     .then(resp => resp.json())
     .then(data => console.log(data))
-    .then(() => getGames())
+    .then(() => {
+      getGames()
+      getParticipants()
+    })
   }
 
   // Edit game if you're the host of it
@@ -90,11 +105,29 @@ current_players, max_players, description, host_id, id}}) {
     .then(() => getGames())
   }
 
+  // Delete user from participants
+  const leaveGame = (e, id) => {
+    e.preventDefault()
+
+    fetch(`/participants/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(() => {    
+      getGames()
+      getParticipants()
+    })
+  }
+
+  let participant = participants.find(participant => participant.user_id === user.id)
+
   return (
     <>  
     <div className="card">
       <div className="details">
-        <div>
+        <div className="expand-btn">
         
           {edit ? 
           <input type="text" 
@@ -151,16 +184,21 @@ current_players, max_players, description, host_id, id}}) {
         </>}
         <div className="player-count">
           <h3>{current_players}/{max_players} Players</h3>
-          {!participants.user_id === user.id && participants.length !== 0 
-            &&<button className="action-btn join-btn" onClick={(e) => joinGame(e, user.id, id)}>Join This Game!</button>}
+          
         </div>
         
         {/* Only edit or delete if user created the card */}
+
         {host_id === user.id ? 
-          <div className="action-btn-container">
+        <div className="action-btn-container">
+          <div className= "edit-delete-container">
             {edit ? <button className= "action-btn" onClick ={(e) => updateGame(e, id, gameInfo)}>Save</button>
               :<button className= "action-btn" onClick ={() => handleEdit()}>Edit</button> }
             <button className= "action-btn delete-btn" onClick={(e)=> deleteGame(e, id)}>Delete</button>
+          </div>
+          {!participant ?
+            <button className="action-btn join-btn" onClick={(e) => joinGame(e, user.id, id)}>Join This Game!</button>
+          : <button className="action-btn leave-btn" onClick={(e) => leaveGame(e, id)}>Leave Game</button> }
           </div> : null}
       </div>
     </div>

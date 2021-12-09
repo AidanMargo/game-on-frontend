@@ -16,7 +16,7 @@
     float: right;
 }
 
-.card-container div:first-of-type {
+.expand-btn {
   display: flex;
   justify-content: space-between;
 }

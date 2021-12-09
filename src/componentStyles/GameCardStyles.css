@@ -13,6 +13,7 @@
   margin-left: 2rem;
 }
 
+
 .game-name {
   color:black 
 }
@@ -24,6 +25,7 @@
 .action-btn-container {
   display: flex;
 }
+
 .action-btn {
   width: 10%;
   padding: .5rem;
@@ -34,6 +36,16 @@
 .join-btn {
   background-color: rgb(57, 177, 109);
 }
+
+.leave-btn {
+  background-color: rgb(138, 31, 31);
+  color: white;
+}
+
+.edit-delete-container {
+  width: 100%;
+}
+
 .delete-btn {
   background-color: rgb(117, 25, 25);
   color: white;
