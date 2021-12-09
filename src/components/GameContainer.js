@@ -54,7 +54,7 @@ const createGame = (e, gameData) => {
   
   return (
     <>
-    {games.length > 0 && user ?  
+    {games.length >= 0 && user ?  
     <>
     <h1>Welcome, {user.name}!</h1>
     <div className="game-grid">
@@ -129,7 +129,7 @@ const createGame = (e, gameData) => {
       {/* Game Container */}
       <div className="card-container">
         <Search search={search} handleSearch={handleSearch} />
-        {searchResults().map(game => <GameCard key={game.id} game={game} user={user} getGames={getGames}/>)}
+        {searchResults().map(game => <GameCard key={game.id} game={game} user={user} getGames={getGames} gameData={gameData}/>)}
       </div>
       </div>
     </>

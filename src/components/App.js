@@ -24,17 +24,8 @@ function App() {
     .then(resp => resp.json())
     .then(data => setGames(data))
   }
-  // Handle Search function
-  const [search, setSearch] = useState('')
-  const handleSearch = (e) => setSearch(e.target.value)
-  const searchByNameResults = () => {
-    if (search.length > 0) {
-      return games.filter(game => game.name.toLowerCase().includes(search.toLowerCase()) 
-      || game.location.toLowerCase().includes(search.toLowerCase()))
-    } else {
-      return games
-    }
-  }
+
+
   // Set Current User
   const [user, setUser] = useState(null)
   useEffect(() => {
@@ -45,6 +36,19 @@ function App() {
       }
     });
   }, []);
+
+
+  // Handle Search function
+  const [search, setSearch] = useState('')
+  const handleSearch = (e) => setSearch(e.target.value)
+  const searchByNameResults = () => {
+    if (search.length > 0 && user) {
+      return games.filter(game => game.name.toLowerCase().includes(search.toLowerCase()) 
+      || game.location.toLowerCase().includes(search.toLowerCase()))
+    } else {
+      return games
+    }
+  }
 
   // Logout
   const logOut = (e) => {

@@ -40,3 +40,10 @@
   font-size: 1.1rem;
   margin-left: 1rem;
 }
+
+.edit-field {
+  width: 30%;
+  padding: .5rem;
+  font-size: 1.1rem;
+  margin: .5rem 0;
+}

@@ -16,10 +16,9 @@ export default function Profile({user, search, searchResults, handleSearch, getG
 
   // const userGameSearch = ()
 
-  console.log(userGames)
   return (
     <>
-    {user ?
+    {user && userGames.length >= 0?
     <>
     <div className="profile-grid">
      
@@ -27,12 +26,13 @@ export default function Profile({user, search, searchResults, handleSearch, getG
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdhnZO4YVdLifMuNbR_uNjtlW246uAayxk8wtAh_CLc6Nba7Aeys4tCPhFjIeT7hWe5co&usqp=CAU"/>
         <h1>{user.name}</h1>
         <h2>{user.age}</h2>
+        <h2></h2>
       </div>
       <div className="user-games"> 
-      <div className="card-container">
-        <Search search={search} handleSearch={handleSearch} />
-        {searchResults().map(game => <GameCard key={game.id} game={game} user={user} getGames={getGames}/>)}
-      </div>
+        <div className="card-container">
+          <Search search={search} handleSearch={handleSearch} />
+          {userGames.map(game => <GameCard key={game.id} game={game} user={user} getGames={getGames}/>)}
+        </div>
       </div>
     </div> 
     </>
