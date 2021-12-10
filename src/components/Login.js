@@ -14,7 +14,7 @@ export default function Login({setUser}) {
 
   const [signUpData, setSignUpData] = useState({
     name: '',
-    age: null,
+    age: '',
     profile_pic: 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg',
     email: '',
     password: '',
@@ -48,10 +48,19 @@ export default function Login({setUser}) {
         password
       })
     })
-    .then(resp => resp.json())
-    .then(data => setUser(data))
-    .then(navigate('/home'))
-  }
+    .then(resp => {
+      if(resp.ok){
+      resp.json()
+      .then( data =>{
+      setUser(data)
+      navigate('/home')
+      }) 
+    } else {
+      resp.json()
+      .then(data => alert("Invalid username or password"))
+    }
+  })}
+  
 
 
   const signUp = (e, signUpData) => {
@@ -72,11 +81,24 @@ export default function Login({setUser}) {
         password_confirmation: passwordConfirmation
       })
     })
-    .then(resp => resp.json())
-    .then(data => setUser(data))
-    .then(() => navigate('/home'))
-    
-    
+    .then(resp => {
+      if(resp.ok){
+        resp.json()
+        .then( data =>{
+        setUser(data)
+        navigate('/home')
+        }) 
+      } else {
+        resp.json()
+        .then(data => alert(data.errors))
+      }
+    })
+    // .then(resp => console.log(resp.keys))
+    // .then(resp => {
+      //  setUser(resp) 
+        // navigate('/home')
+    //  }).catch(error => alert(`Error: ${error}`))
+    // .then( => navigate('/home'))
   }
 
 

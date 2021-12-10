@@ -52,11 +52,11 @@ export default function Profile({user, getUser, search, searchResults, handleSea
 
   return (
     <>
-    {user && userGames.length >= 0?
+    {user && userGames.length >= 0 ?
     <>
     <div className="profile-grid">
      
-      <div className="user-info">
+      <div className="user-info"> 
         
         <div className="card-container">
           {!editProfile ? <img className="profile-pic" src={user.profile_pic}/> 
@@ -74,7 +74,6 @@ export default function Profile({user, getUser, search, searchResults, handleSea
       </div>
       <div className="user-games"> 
         <div className="card-container">
-          <Search search={search} handleSearch={handleSearch} />
           {userGames.map(game => <GameCard key={game.id} game={game} user={user} getGames={getGames}/>)}
         </div>
       </div>

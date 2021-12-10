@@ -74,6 +74,8 @@ const createGame = (e, gameData) => {
           type='datetime-local'
           name='date'
           required='required'
+          min="2021-12-10T00:00:00"
+          max="2050-05-05T16:15:23"
           className='input-field'
           value={gameData.date}
           placeholder='Password'

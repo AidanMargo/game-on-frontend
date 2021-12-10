@@ -124,13 +124,21 @@ current_players, max_players, description, host_id, id}}) {
 
   // Returns "Game is Full" or an option to join a game dependent on participant status and # of participants
   const joinOptions = () => {
-    if(current_players === max_players && !participant){
-      return <p>Game is full</p>
-    } else if (!participant && current_players < max_players) {
-      return <button className="action-btn join-btn" onClick={(e) => joinGame(e, user.id, id)}>Join This Game!</button>
+    if(participants){
+      if (participant) {
+        return <button className="action-btn leave-btn" onClick={(e) => leaveGame(e, participant.id)}>Leave Game</button>
+    } else if(current_players === max_players){
+        return <p>Game is full</p>
     } else {
-      return <button className="action-btn leave-btn" onClick={(e) => leaveGame(e, participant.id)}>Leave Game</button>
-    }
+        return <button className="action-btn join-btn" onClick={(e) => joinGame(e, user.id, id)}>Join This Game!</button>
+    }}
+    // if(current_players === max_players && !participant){
+    //   return <p>Game is full</p>
+    // } else if (!participant && current_players < max_players) {
+    //   return <button className="action-btn join-btn" onClick={(e) => joinGame(e, user.id, id)}>Join This Game!</button>
+    // } else {
+    //   return <button className="action-btn leave-btn" onClick={(e) => leaveGame(e, participant.id)}>Leave Game</button>
+    // }
   }
 
   // Checks to see if user is a participant in this game
@@ -212,6 +220,7 @@ current_players, max_players, description, host_id, id}}) {
           </div> : null}
           <div className ="participant-btn-container">
             {joinOptions()}
+            
           </div>
           
       </div>

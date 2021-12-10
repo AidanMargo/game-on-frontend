@@ -42,3 +42,9 @@ label {
   margin: 1rem;
 }
 
+.create-game-form > button {
+  margin: auto;
+  padding: 0.75rem
+  
+}
+
